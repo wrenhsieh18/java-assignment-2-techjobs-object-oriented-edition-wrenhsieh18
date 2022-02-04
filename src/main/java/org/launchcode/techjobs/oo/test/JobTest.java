@@ -1,7 +1,6 @@
 package org.launchcode.techjobs.oo.test;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 import org.launchcode.techjobs.oo.*;
@@ -16,39 +15,60 @@ import static org.junit.Assert.*;
 @RunWith(JUnit4.class)
 public class JobTest {
 
-    Job testJob1;
-    Job testJob2;
-    Job testJob3;
-    Job testJob4;
+    static Job testJob1;
+    static Job testJob2;
+    static Job testJob3;
 
-    @Before
-    public void initializeTestObject() {
-        testJob1 = new Job();
-        testJob2 = new Job();
-        testJob3 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
-        testJob4 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+    @BeforeClass
+    public static void initializeTestObject() {
+        testJob1 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        testJob2 = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        testJob3 = new Job("Product tester", new Employer("ACME"), new Location(""), new PositionType(""), new CoreCompetency("Persistence"));
     }
 
     @Test
-    public void testSettingJodId() {
-       assertEquals("two job objects created in the row should have sequential integer IDs", 1, testJob2.getId() - testJob1.getId());
+    public void testSettingJobId() {
+       assertEquals("two job objects created in the row should have sequential integer IDs", -1, new Job().getId() - new Job().getId());
+        System.out.println(testJob1.getId());
     }
 
     @Test
     public void testJobConstructorSetsAllFields() {
-        assert testJob3 instanceof Job;
-        assertEquals("should assign proper ID", 3, testJob3.getId());
-        assertEquals("should assign proper name","Product tester", testJob3.getName());
-        assertEquals("should assign proper employer","ACME", testJob3.getEmployer().getValue());
-        assertEquals("should assign proper location","Desert", testJob3.getLocation().getValue());
-        assertEquals("should assign proper position type","Quality control", testJob3.getPositionType().getValue());
-        assertEquals("should assign proper core competency","Persistence", testJob3.getCoreCompetency().getValue());
+        assert testJob1 instanceof Job;
+        assertTrue( testJob1.getId() == 1 );
+        assertTrue("Product tester".equals(testJob1.getName()) );
+        assertTrue("ACME".equals(testJob1.getEmployer().getValue()) );
+        assertTrue("Desert".equals(testJob1.getLocation().getValue()) );
+        assertTrue("Quality control".equals(testJob1.getPositionType().getValue()) );
+        assertTrue("Persistence".equals(testJob1.getCoreCompetency().getValue()) );
+        assertEquals(1, testJob1.getId());
+        assertEquals("Product tester", testJob1.getName());
+        assertEquals("ACME", testJob1.getEmployer().getValue());
+        assertEquals("Desert", testJob1.getLocation().getValue());
+        assertEquals("Quality control", testJob1.getPositionType().getValue());
+        assertEquals("Persistence", testJob1.getCoreCompetency().getValue());
 
     }
 
     @Test
     public void testJobsForEquality() {
-        assertEquals(false, testJob3.equals(testJob4));
+        assertFalse(testJob1.equals(testJob2));
+    }
+
+    @Test
+    public void testToStringStartsAndEndsWithNewLine() {
+        assertEquals("\n", Character.toString(testJob1.toString().charAt(0)) );
+        assertEquals("\n", Character.toString(testJob1.toString().charAt(testJob1.toString().length()-1)) );
+    }
+
+    @Test
+    public void testToStringContainsCorrectLabelsAndData() {
+        assertEquals("\nID: 1\nName: Product tester\nEmployer: ACME\nLocation: Desert\nPosition Type: Quality control\nCore Competency: Persistence\n", testJob1.toString());
+    }
+
+    @Test
+    public void testToStringHandlesEmptyField() {
+        assertEquals("\nID: 3\nName: Product tester\nEmployer: ACME\nLocation: Data not available\nPosition Type: Data not available\nCore Competency: Persistence\n", testJob3.toString());
     }
 
 
