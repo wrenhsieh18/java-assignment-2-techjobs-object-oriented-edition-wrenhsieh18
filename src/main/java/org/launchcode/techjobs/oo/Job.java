@@ -1,6 +1,5 @@
 package org.launchcode.techjobs.oo;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Job {

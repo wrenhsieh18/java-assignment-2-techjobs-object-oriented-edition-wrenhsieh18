@@ -47,7 +47,6 @@ public class JobTest {
         assertEquals("Desert", testJob1.getLocation().getValue());
         assertEquals("Quality control", testJob1.getPositionType().getValue());
         assertEquals("Persistence", testJob1.getCoreCompetency().getValue());
-
     }
 
     @Test
